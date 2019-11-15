@@ -88,21 +88,24 @@ class ErShouSpider(BaseSpider):
             # 获得有小区信息的panel
             house_elements = soup.find_all('li', class_="clear")
             for house_elem in house_elements:
-                price = house_elem.find('div', class_="totalPrice")
+                total_price = house_elem.find('div', class_="totalPrice")
+                unit_price = house_elem.find('div', class_="unitPrice")
                 name = house_elem.find('div', class_='title')
+                url = house_elem.find('div', class_='title').find(name='a').get('href')
                 desc = house_elem.find('div', class_="houseInfo")
-                pic = house_elem.find('a', class_="img").find('img', class_="lj-lazy")
+                # pic = house_elem.find('a', class_="img").find('img', class_="lj-lazy")
 
                 # 继续清理数据
-                price = price.text.strip()
-                name = name.text.replace("\n", "")
+                total_price = total_price.text.strip()
+                unit_price = unit_price.text.strip()
+                name = name.text.replace("\n", "").replace(",", "，")
                 desc = desc.text.replace("\n", "").strip()
-                pic = pic.get('data-original').strip()
+                # pic = pic.get('data-original').strip()
                 # print(pic)
 
 
                 # 作为对象保存
-                ershou = ErShou(chinese_district, chinese_area, name, price, desc, pic)
+                ershou = ErShou(chinese_district, chinese_area, name, total_price, unit_price, desc, url)
                 ershou_list.append(ershou)
         return ershou_list
 
