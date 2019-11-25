@@ -49,7 +49,7 @@ if __name__ == '__main__':
 
     if database == "mysql":
         import records
-        db = records.Database('mysql://root:yuner@123@106.14.158.161/color?charset=utf8', encoding='utf-8')
+        db = records.Database('mysql://root:yuner@123@127.0.0.1/color?charset=utf8', encoding='utf-8')
     elif database == "mongodb":
         from pymongo import MongoClient
         conn = MongoClient('106.14.158.161', 27017)
